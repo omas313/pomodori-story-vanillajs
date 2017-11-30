@@ -1,0 +1,163 @@
+<html>
+
+<head>
+  <title>Pomodori Story</title>
+
+  <meta charset="UTF-8">
+  <meta name="description" content="Pomodoro timer with tasks">
+  <meta name="keywords" content="pomodoro, pomodori, timer, story">
+  <meta name="author" content="Omar Salam">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+
+  <div id="container">
+
+    <!-- Timer -->
+    <div id="timer-container">
+
+      <div id="timer-buttons">
+        <button id="start-button">
+          <img class="icon-20" src="assets/play.png" alt="Play/Pause image">
+        </button>
+        <button id="reset-button">
+          <img class="icon-20" src="assets/reload.png" alt="Reload image">
+        </button>
+      </div>
+
+      <div id="time-container">
+        <span id="time-min"></span> :
+        <span id="time-sec"></span>
+      </div>
+
+      <div id="session-buttons">
+        <button id="pomodoro-button">
+          <img class="icon-40" src="assets/tomato.png" alt="Tomato image">
+        </button>
+        <button id="short-break-button">
+          <img class="icon-40" src="assets/time-5.png" alt="Tomato image">
+        </button>
+        <button id="long-break-button">
+          <img class="icon-40" src="assets/time-10.png" alt="Tomato image">
+        </button>
+      </div>
+
+
+
+    </div>
+
+    <!-- Session status -->
+    <div id="session-status">
+      <div id="pomodori-count-container">
+        Total Pomodori: <span id="total-pomodori">0</span>
+      </div>
+      <div id="pending-pomodori-container">
+        Unassigned:
+        <span id="pending-pomodori">0</span>
+      </div>
+      <div>
+        <button id="reset-pomodori">
+            <img src="assets/reload.png" class="icon-20">
+        </button>
+      </div>
+    </div>
+
+    <!-- Tasks -->
+    <div id="tasks-container">
+      <h2 class="text-center">Tasks</h2>
+      <div>
+        <div class="input-container">
+          <input type="text" id="text-input" autofocus placeholder="Enter a task..." >
+        </div>
+      </div>
+      <div id="tasks-list-container">
+        <ul id="tasks">
+          <div class="empty text-center">
+            You have no tasks
+          </div>
+          <!-- <li>
+            <div class="task-pomodori">10</div>
+            <div class="task-title ">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, in.
+            </div>
+            <div class="task-buttons">
+              <button id='task-add-${t.id}' class='task-add-btn'>+</button>
+              <button id='task-add-${t.id}' class='task-dec-btn'>-</button>
+              <button id='task-add-${t.id}' class='task-remove-btn'>x</button>
+            </div>
+          </li>
+          <li class="">
+            <div class="task-pomodori ">1</div>
+            <div class="task-title "> Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam facilis aliquid distinctio. Laudantium, mollitia nam magnam quis doloremque magni facilis provident modi delectus beatae deserunt molestias voluptate dolorum iure repudiandae.            </div>
+            <div class="task-buttons">
+              <button id='task-add-${t.id}' class='task-add-btn'>+</button>
+              <button id='task-add-${t.id}' class='task-dec-btn'>-</button>
+              <button id='task-add-${t.id}' class='task-remove-btn'>x</button>
+            </div>
+          </li>
+          <li class="">
+            <div class="task-pomodori ">1</div>
+            <div class="task-title ">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi harum corrupti hic, beatae est odio laborum soluta iure ipsam ad?
+            </div>
+            <div class="task-buttons">
+              <button id='task-add-${t.id}' class='task-add-btn'>+</button>
+              <button id='task-add-${t.id}' class='task-dec-btn'>-</button>
+              <button id='task-add-${t.id}' class='task-remove-btn'>x</button>
+            </div>
+          </li>
+          <li class="completed">
+            <div class="task-pomodori completed">5</div>
+            <div class="task-title completed">
+            Lorem ipsum dolor sit amet consectetur.            
+            </div>
+            <div class="task-buttons">
+              <button id='task-add-${t.id}' class='task-add-btn'>+</button>
+              <button id='task-add-${t.id}' class='task-dec-btn'>-</button>
+              <button id='task-add-${t.id}' class='task-remove-btn'>x</button>
+            </div>
+          </li> -->
+        </ul>
+        <div id="storage-buttons">
+          <button id="save-tasks">Save template</button>
+          <button id="load-tasks">Load template</button>
+          <button id="clear-tasks">Clear saved template</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  
+  <!-- Testing stuff: remove later -->
+  <!-- <br><hr><hr><hr><br>
+  <div>
+    <input type="text" id="custom-time" />
+    <button id="set-custom-time">set time</button>
+  </div>
+  <button id="open-modal">Open Modal</button> -->
+
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <div class="modal-title">Assign pomodoro to a task</div>
+      <ul id="modal-tasks"></ul>
+    </div>
+  </div>
+
+  <!-- Snackbar -->
+  <div id="snackbar"></div>
+
+  <audio src="assets/bell.wav" type="audio/wav" alt="">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script src="js/main.js"></script>
+</body>
+
+</html>

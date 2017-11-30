@@ -1,0 +1,444 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0);    
+}
+
+body {
+    /* background-color: #190021; */
+    background-image: url('../assets/fractals.jpg');
+    color: #ddd;
+    font-family: Tahoma;
+}
+
+button {
+    /* padding: 10px 20px; */
+    font-size: 20px;
+    border: 2px solid #251125;
+    background: goldenrod;
+    color: #220325;
+}
+button:hover {
+    cursor: pointer;
+}
+  
+
+#container {
+    background-color: rgba(0, 0, 0, 0);
+    padding: 10px;
+    display: grid;
+    align-content: center;
+    justify-content: center;
+    align-self: center;
+    justify-self: center;
+    align-items: center;
+    justify-items: center;
+}
+
+
+/*************************************************
+    Timer
+*************************************************/
+
+#timer-container {
+    padding: 30px 20px;
+    background-color: #220325;
+    border-radius: 15px 15px 0 0;
+    width: 90%;
+    display: grid;
+    margin-bottom: 0;    
+    /* justify-items: center;
+    align-items: center; */
+    /* height: 350px; */
+    /* grid-auto-rows: minmax(150px, auto); */
+}
+
+#time-container {
+    align-self: center;
+    justify-self: center;
+    margin: 0 auto 30px auto;
+    font-size: 90;
+    text-align: center;
+    cursor: pointer;
+}
+
+#time-container:hover{
+    color: #fff;
+}
+
+
+#timer-buttons {
+    margin: 0 auto;
+}
+#timer-buttons button {
+    margin: 0;
+    width: 60px;
+    height: 50px;    
+    border: none;
+    border-radius: 10px;
+    background-color: #af841b;
+}
+#timer-buttons button:hover {
+    transform: translateY(-2px);
+    background-color: #d7a21e;
+}
+
+#session-buttons {
+    margin: 0 auto;
+}
+#session-buttons button{
+    margin: 0;
+    width: 90px;
+    height: 75px;
+    border: none;
+    border-radius: 30px;
+    background-color: #af841b;
+}
+#session-buttons button:hover {
+    transform: translateY(-2px);
+    background-color: #d7a21e;
+}
+
+#time-min, #time-sec {
+    font-size: 130px;
+    letter-spacing: 10px;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;    
+}
+
+
+
+/*************************************************
+    Session status
+*************************************************/
+
+
+#session-status {
+    display: grid;
+    grid-template-columns: 8fr 8fr 1fr;
+    background-color: #180018;
+    margin: 0 40px;
+    border-top: 1px solid #d7a21e;
+    border-bottom: 1px solid #d7a21e;
+    width: 80%;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#pomodori-count-container {
+    font-size: 18px;
+}
+#pending-pomodori-container {
+    font-size: 18px;
+}
+
+#total-pomodori, #pending-pomodori {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+#reset-pomodori {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #967116;
+}
+#reset-pomodori:hover {
+    background-color: #d7a21e;
+}
+
+/*************************************************
+    Tasks
+*************************************************/
+
+#tasks-container {
+    background-color: #220325;
+    padding: 30px 20px;
+    border-radius: 0 0 15px 15px;
+    width: 90%;
+}
+#tasks-container h2 {
+    font-size: 38px;
+}
+
+#tasks {
+    padding: 20px;   
+}
+.task {
+    list-style-type: none;
+    border-bottom: 2px solid #888;
+    background-color: #413;
+    display: grid;
+    grid-template-columns: 1fr 10fr 2fr;
+    margin-bottom: 5px;
+}
+
+.task.completed{
+    border-bottom: 2px solid #ff00d0;
+}
+#tasks li:nth-child(odd) {
+    background: #413;
+}
+#tasks li:nth-child(odd) {
+    background: #514;
+}
+
+.task-pomodori {
+    background-color: #888;
+    text-align: center;
+    display: grid;
+    align-self: center;
+    justify-self: center; 
+    align-content: center; 
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    font-size: 22px;
+}
+.task-pomodori.completed {
+    background-color: #ff00d0;
+}
+
+.task-title {
+    padding: 20px 15px;
+}
+.task-title:hover {
+    background-color: #ff00d0;
+    cursor: pointer;
+}
+
+.task-title.completed{
+    text-decoration: line-through;
+    color: #666;
+}
+
+.task-buttons {
+    display: grid;
+    text-align: center;
+    align-self: center;
+    justify-self: center; 
+    justify-content: center;
+    grid-template-columns: 1fr 1fr 1fr;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+}
+.task-buttons button {
+    font-size: 10px;
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #312;
+    color: #ddd;
+    font-size: 20px;
+    padding: 15px;
+}
+.task-buttons button:hover {
+    background: #d7a21e;
+}
+.task-buttons button.task-remove-btn:hover {
+    background: #D00;
+}
+
+#storage-buttons {
+    text-align: center;
+    margin: 50px auto 10px auto;
+}
+#storage-buttons button {
+    background-color: #967116;
+    border: none;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 10px;
+    color: #230225;
+}
+#storage-buttons button:hover {
+    background: #d7a21e;
+}
+
+.empty {
+    padding: 30px;
+    font-size: 30px;
+}
+
+
+
+/*************************************************
+    Others
+*************************************************/
+
+
+.input-container {
+    margin: 0 auto;
+    text-align: center;
+}
+input {
+    width: 80%;
+    text-align: center;
+    height: 30px;
+    border-radius: 10px;
+    border: 1px solid #070000;
+    font-size: 20px;
+    padding: 20px;
+    background-color: #310536;
+    color: #ddd;
+}
+input:focus {
+    outline: none;
+    border: 1px solid #888;
+    background-color: #404;
+}
+
+/*********************************************
+ *   Modal 
+**********************************************/
+
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    text-align: center;
+}
+
+.modal-title {
+    font-size: 30px;
+    text-align: center;
+    padding-top: 40px;
+}
+
+.modal-content {
+    background-color: #221122;
+    margin: auto;
+    padding: 50px auto;
+    border: 1px solid #888;
+    width: 80%;
+    text-align: center;
+}
+
+.modal-task {
+    list-style-type: none;
+    border-bottom: 2px solid #888;
+    background-color: #413;
+    display: grid;
+    grid-template-columns: 1fr 10fr;
+    margin-bottom: 5px;
+}
+#modal-tasks {
+    padding: 60px 10px;
+}
+
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    margin: 10px;
+}
+
+.close:hover, .close:focus {
+    color: #fff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/***********************************************
+ * Snackbar  
+************************************************/
+
+/* The snackbar - position it at the bottom and in the middle of the screen */
+#snackbar {
+    visibility: hidden; /* Hidden by default. Visible on click */
+    min-width: 250px; /* Set a default minimum width */
+    margin-left: -125px; /* Divide value of min-width by 2 */
+    background-color: #313; /* Black background color */
+    color: #ddd; /* White text color */
+    text-align: center; /* Centered text */
+    border-radius: 2px; /* Rounded borders */
+    padding: 16px; /* Padding */
+    position: fixed; /* Sit on top of the screen */
+    z-index: 1; /* Add a z-index if needed */
+    left: 50%; /* Center the snackbar */
+    bottom: 30px; /* 30px from the bottom */
+}
+
+#snackbar.show {
+    visibility: visible;
+
+    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+}
+
+/* Animations to fade the snackbar in and out */
+@-webkit-keyframes fadein {
+    from {bottom: 0; opacity: 0;} 
+    to {bottom: 30px; opacity: 1;}
+}
+
+@keyframes fadein {
+    from {bottom: 0; opacity: 0;}
+    to {bottom: 30px; opacity: 1;}
+}
+
+@-webkit-keyframes fadeout {
+    from {bottom: 30px; opacity: 1;} 
+    to {bottom: 0; opacity: 0;}
+}
+
+@keyframes fadeout {
+    from {bottom: 30px; opacity: 1;}
+    to {bottom: 0; opacity: 0;}
+}
+
+/*********************************** 
+ * blink animation 
+*******************************************/
+
+@keyframes blink {
+    50% {
+        opacity: 0.0;
+    }
+    }
+    @-webkit-keyframes blink {
+    50% {
+        opacity: 0.0;
+    }
+}
+.blink {
+    animation: blink 2s ease-in-out 0s infinite;
+    -webkit-animation: blink 2s ease-in-out 0s infinite;
+}
+
+/********************************************
+ * utilities  
+**********************************************/
+
+.text-center {
+    text-align: center;
+}
+
+.icon-20 {
+    max-width: 20px;
+    max-height: 20px;
+}
+
+.icon-40 {
+    max-width: 40px;
+    max-height: 40px;
+}
+
+.mb-30 {
+    margin-bottom: 30px;
+}
+.mb-50 {
+    margin-bottom: 50px;
+}
