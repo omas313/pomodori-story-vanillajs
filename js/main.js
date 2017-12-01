@@ -441,7 +441,7 @@ document.getElementById("load-tasks").addEventListener("click", function () {
 
   list.split(',')
     .forEach(function(t) {
-      addTask(title, 0);
+      addTask(t, 0);
     });
 
   showSnackbar("Loaded template");
