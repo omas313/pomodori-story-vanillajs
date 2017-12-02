@@ -169,7 +169,7 @@ function refreshTasksList() {
 }
 
 // tasks input and button
-document.getElementById("text-input").addEventListener("keydown", function(e) {
+document.getElementById("text-input").addEventListener("keydown", function (e) {
   if (e.keyCode != 13) return;
 
   if (e.target.value.indexOf("---hP:") != -1) {
@@ -199,6 +199,12 @@ function validateTitle(title) {
   return title.length > 330 ? title.substring(0, 300) + "..." : title;
 }
 
+document.getElementById("clear-all-tasks-button").addEventListener("click", function(e) {
+  tasks = [];
+  refreshTasksList();
+  if (totalPomodori > 0) setPendingPomodori(totalPomodori);
+});
+
 //===============================================
 // Setup event bindings for modal
 //===============================================
@@ -207,7 +213,7 @@ function openModal() {
   modal.style.display = "block";
 
   modalTasksElement.innerHTML = "";
-  tasks.forEach(function(t) {
+  tasks.forEach(function (t) {
     modalTasksElement.innerHTML += t.completed ? "" : t.getModalHTMLTemplate()
   });
   modal.querySelectorAll("li[id^=modal-task]").forEach(function (b) {
@@ -236,24 +242,24 @@ window.onclick = function (event) {
 // Setup event bindings for session handling
 //===============================================
 
-document.getElementById("pomodoro-button").addEventListener("click", function() {
+document.getElementById("pomodoro-button").addEventListener("click", function () {
   setTime(25, 0);
   currentSession = 25;
   startTimer();
 });
-document.getElementById("short-break-button").addEventListener("click", function() {
+document.getElementById("short-break-button").addEventListener("click", function () {
   setTime(5, 0);
   currentSession = 5;
   startTimer();
 });
-document.getElementById("long-break-button").addEventListener("click", function() {
+document.getElementById("long-break-button").addEventListener("click", function () {
   setTime(10, 0);
   currentSession = 10;
   startTimer();
 });
 
-document.getElementById("reset-pomodori").addEventListener("click", function() {
-  tasks.forEach(function(t) {
+document.getElementById("reset-pomodori").addEventListener("click", function () {
+  tasks.forEach(function (t) {
     t.pomodori = 0;
   });
   resetAllPomodori();
@@ -314,14 +320,6 @@ document.getElementById("start-button")
 function handleTimerToggle() {
   if (isPlaying) pauseTimer();
   else startTimer();
-
-  updateButtonIcon();
-}
-
-function pauseTimer() {
-  isPlaying = false;
-  clearInterval(timer);
-  animateTimer();
 }
 
 function startTimer() {
@@ -329,23 +327,40 @@ function startTimer() {
   timer = setInterval(secondPassed, 1000);
   isPlaying = true;
 
-  animateTimer();
+  removeBlink();
+  updateButtonIcon();
 }
 
-document.getElementById("reset-button").addEventListener("click", function() {
-  pauseTimer();
+function pauseTimer() {
+  isPlaying = false;
+  clearInterval(timer);
+
+  blinkTimer();
+  updateButtonIcon();
+}
+
+function resetTimer() {
+  isPlaying = false;
+  clearInterval(timer);
   setTime(currentSession, 0);
-});
+
+  removeBlink();
+  updateButtonIcon();
+}
+
+document.getElementById("reset-button").addEventListener("click", resetTimer);
 
 function updateButtonIcon() {
   document.querySelector("#start-button img").setAttribute("src",
     isPlaying ? "assets/pause.png" : "assets/play.png");
 }
 
-function animateTimer() {
-  const container = document.getElementById("time-container");
-  if (isPlaying) container.classList.remove("blink");
-  else container.classList.add("blink")
+function blinkTimer() {
+  document.getElementById("time-container").classList.add("blink")
+}
+
+function removeBlink() {
+  document.getElementById("time-container").classList.remove("blink");
 }
 
 //=========================================
@@ -356,6 +371,11 @@ function addPomodoro() {
   totalPomodori++;
   updateTotalPomodoriText();
   addPendingPomodoro();
+}
+
+function setPendingPomodori(amount) {
+  pendingPomodori = amount;
+  updatePendingPomodoriText();
 }
 
 function addPendingPomodoro(amount) {
@@ -423,7 +443,7 @@ document.getElementById("save-tasks").addEventListener("click", function () {
     return;
   }
 
-  localStorage.template = tasks.map(function(t) { return t.title; });
+  localStorage.template = tasks.map(function (t) { return t.title; });
   showSnackbar("Saved template");
 });
 
@@ -441,7 +461,7 @@ document.getElementById("load-tasks").addEventListener("click", function () {
   }
 
   list.split(',')
-    .forEach(function(t) {
+    .forEach(function (t) {
       addTask(t, 0);
     });
 

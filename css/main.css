@@ -160,6 +160,21 @@ button:hover {
     border-radius: 0 0 15px 15px;
     width: 90%;
 }
+
+#tasks-title {
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+}
+
+#tasks-title button {
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #967116;
+}
+#tasks-title button:hover {
+    background-color: #d7a21e;
+}
+
 #tasks-container h2 {
     font-size: 38px;
 }
@@ -442,3 +457,18 @@ input:focus {
 .mb-50 {
     margin-bottom: 50px;
 }
+
+.grid-centered {
+    align-self: center;
+    justify-self: center;
+}
+
+
+/********************************************
+ * media queries  
+**********************************************/
+
+@media screen and (max-width: 800px) {
+    
+}
+    
