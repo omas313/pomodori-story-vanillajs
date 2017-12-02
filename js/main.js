@@ -375,6 +375,7 @@ function resetAllPomodori() {
   totalPomodori = 0;
   pendingPomodori = 0;
   updatePendingPomodoriText();
+  updateTotalPomodoriText();
 }
 
 function updatePendingPomodoriText() {
