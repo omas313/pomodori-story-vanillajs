@@ -13,14 +13,14 @@ body {
 }
 
 button {
-    /* padding: 10px 20px; */
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #967116;
     font-size: 20px;
-    border: 2px solid #251125;
-    background: goldenrod;
-    color: #220325;
+    border: none;
 }
 button:hover {
-    cursor: pointer;
+    background-color: #d7a21e;
 }
   
 
@@ -164,15 +164,6 @@ button:hover {
 #tasks-title {
     display: grid;
     grid-template-columns: 1fr 5fr 1fr;
-}
-
-#tasks-title button {
-    padding: 5px 10px;
-    border-radius: 5px;
-    background-color: #967116;
-}
-#tasks-title button:hover {
-    background-color: #d7a21e;
 }
 
 #tasks-container h2 {
@@ -441,6 +432,10 @@ input:focus {
     text-align: center;
 }
 
+.text-muted {
+    color: #888;
+}
+
 .icon-20 {
     max-width: 20px;
     max-height: 20px;
@@ -469,6 +464,16 @@ input:focus {
 **********************************************/
 
 @media screen and (max-width: 800px) {
+    #container { 
+        width: 100%;
+    }
+    #session-status, #timer-container, #tasks-container {
+        width: 95%;
+    }
+
+    #time-min, #time-sec { 
+        font-size: 80px;
+    }
     
 }
     

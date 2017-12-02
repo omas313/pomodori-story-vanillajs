@@ -169,24 +169,27 @@ function refreshTasksList() {
 }
 
 // tasks input and button
-document.getElementById("text-input").addEventListener("keydown", function (e) {
-  if (e.keyCode != 13) return;
+document.getElementById("text-input").addEventListener("keydown", handleEnterTask);
+document.getElementById("add-task").addEventListener("click", handleAddTask);
 
-  if (e.target.value.indexOf("---hP:") != -1) {
-    hackPomodori(e.target.value.split(":")[1]);
-    e.target.value = "";
+function handleEnterTask(e) { 
+  if (e.keyCode != 13) return;
+  handleAddTask(e);
+}
+
+function handleAddTask(e) {
+
+  // check for empty title
+  if (!e.target.value) {
+    showSnackbar("Must enter a title for the task");
     return;
   }
-  if (e.target.value.indexOf("---hT:") != -1) {
-    var v = e.target.value.split(":")[1].split(".");
-    hackTime(v[0], v[1]);
-    e.target.value = "";
-    return;
-  }
+
+  handleHax(e);
 
   addTask(validateTitle(e.target.value));
   e.target.value = "";
-});
+}
 
 function validateTitle(title) {
   title = title
@@ -204,6 +207,20 @@ document.getElementById("clear-all-tasks-button").addEventListener("click", func
   refreshTasksList();
   if (totalPomodori > 0) setPendingPomodori(totalPomodori);
 });
+
+function handleHax(e) {
+  if (e.target.value.indexOf("---P:") != -1) {
+    hackPomodori(e.target.value.split(":")[1]);
+    e.target.value = "";
+    return;
+  }
+  if (e.target.value.indexOf("---T:") != -1) {
+    var v = e.target.value.split(":")[1].split(".");
+    hackTime(v[0], v[1] || 1);
+    e.target.value = "";
+    return;
+  }
+}
 
 //===============================================
 // Setup event bindings for modal
@@ -399,7 +416,10 @@ function resetAllPomodori() {
 }
 
 function updatePendingPomodoriText() {
-  document.getElementById("pending-pomodori").innerText = pendingPomodori;
+  var el = document.getElementById("pending-pomodori");
+  el.innerText = pendingPomodori;
+  if (pendingPomodori === 0) el.classList.add("text-muted");
+  else el.classList.remove("text-muted");
 }
 
 function updateTotalPomodoriText() {
@@ -520,5 +540,7 @@ var pendingPomodori = 0;
 var currentSession = 25;
 var isPlaying = false;
 
-// set initial time
+// set initial stuff
 setTime(time.min, time.sec);
+updatePendingPomodoriText();
+updateTotalPomodoriText();
