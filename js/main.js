@@ -1,91 +1,144 @@
+//=============================================
+// Starting Point
+//=============================================
+
+// global id counter
+var id = 0;
+
+// model setup
+var Time;
+var Task;
+setupModels();
+
+// Get references to reused DOM objects
+var taskInput = document.getElementById("text-input");
+var tasksElement = document.getElementById("tasks");
+var modal = document.getElementById('myModal');
+var modalTasksElement = document.getElementById("modal-tasks");
+var timeMinElement = document.getElementById("time-min");
+var timeSecElement = document.getElementById("time-sec");
+
+// Main control variables
+var time = new Time(25, 0);
+var timer;
+var tasks = [];
+var totalPomodori = 0;
+var pendingPomodori = 0;
+var currentSession = 25;
+var isPlaying = false;
+
+// set initial time and pomodoro text
+setTime(time.min, time.sec);
+updatePendingPomodoriText();
+updateTotalPomodoriText();
+
+// add event handlers
+setupAllEventHandlers();
+
+//===============================================
+// Models setup
+//===============================================
+
+function setupModels() {
+  setupTimeModel();
+  setupTaskModel();
+}
+
 //===============================================
 // Time model setup
 //===============================================
 
-var Time = function (min, sec) {
+function setupTimeModel() {
+  Time = function (min, sec) {
 
-  var TimeObject = function (min, sec) {
-    this.min = min || 0;
-    this.sec = sec || 0;
-  }
+    var TimeObject = function (min, sec) {
+      this.min = min || 0;
+      this.sec = sec || 0;
+    }
 
-  TimeObject.prototype.toString = function () {
-    var m = this.min < 10 ? "0" + this.min : this.min;
-    var s = this.sec < 10 ? "0" + this.sec : this.sec;
-    return m + " : " + s;
-  };
-  TimeObject.prototype.getMinuteString = function () {
-    return this.min < 10 ? "0" + this.min : this.min;;
-  };
-  TimeObject.prototype.getSecondString = function () {
-    return this.sec < 10 ? "0" + this.sec : this.sec;
-  };
+    TimeObject.prototype.toString = function () {
+      var m = this.min < 10 ? "0" + this.min : this.min;
+      var s = this.sec < 10 ? "0" + this.sec : this.sec;
+      return m + " : " + s;
+    };
+    TimeObject.prototype.getMinuteString = function () {
+      return this.min < 10 ? "0" + this.min : this.min;;
+    };
+    TimeObject.prototype.getSecondString = function () {
+      return this.sec < 10 ? "0" + this.sec : this.sec;
+    };
 
-  return new TimeObject(min, sec);
-};
+    return new TimeObject(min, sec);
+  };
+}
+
 
 //===============================================
 // Tasks model setup
 //===============================================
 
-var Task = function (id, title, pomodori) {
+function getNewId() { return id++; }
 
-  var TaskObject = function (id, title, pomodori) {
-    return new TaskObject.init(id, title, pomodori)
-  }
-
-  TaskObject.init = function (id, title, pomodori) {
-    this.id = id || 0;
-    this.title = title || '';
-    this.pomodori = pomodori || 0;
-    this.completed = false;
-  }
-
-  TaskObject.prototype = {
-    toggleCompleted: function () {
-      this.completed = !this.completed;
-    },
-
-    addPomodoro: function () {
-      this.pomodori++;
-    },
-
-    removePomodoro: function () {
-      if (this.pomodori > 0)
-        this.pomodori--;
-    },
-
-    getHTMLTemplate: function (completedClass = "completed") {
-
-      var classToInsert = this.completed ? completedClass : "";
-
-      return '' +
-        '<li class="task ' + classToInsert + '" id="task-' + this.id + '">' +
-        '<div class="task-pomodori ' + classToInsert + '">' + this.pomodori + '</div>' +
-        '<div class="task-title ' + classToInsert + '">' +
-        this.title +
-        '</div>' +
-        '<div class="task-buttons">' +
-        '<button id="task-add-' + this.id + '" class="task-add-btn">+</button>' +
-        '<button id="task-add-' + this.id + '" class="task-dec-btn">-</button>' +
-        '<button id="task-add-' + this.id + '" class="task-remove-btn">x</button>' +
-        '</div>' +
-        '</li>';
-    },
-
-    getModalHTMLTemplate: function () {
-      return '' +
-        '<li class="modal-task" id="modal-task-' + this.id + '">' +
-        '<div class="task-pomodori">' + this.pomodori + '</div>' +
-        '<div class="task-title">' + this.title + '</div>' +
-        '</li>';
+function setupTaskModel() {
+  Task = function (id, title, pomodori) {
+  
+    var TaskObject = function (id, title, pomodori) {
+      return new TaskObject.init(id, title, pomodori)
     }
+  
+    TaskObject.init = function (id, title, pomodori) {
+      this.id = id;
+      this.title = title || '';
+      this.pomodori = pomodori || 0;
+      this.completed = false;
+    }
+  
+    TaskObject.prototype = {
+      toggleCompleted: function () {
+        this.completed = !this.completed;
+      },
+  
+      addPomodoro: function () {
+        this.pomodori++;
+      },
+  
+      removePomodoro: function () {
+        if (this.pomodori > 0)
+          this.pomodori--;
+      },
+  
+      getHTMLTemplate: function (completedClass = "completed") {
+  
+        var classToInsert = this.completed ? completedClass : "";
+  
+        return '' +
+          '<li class="task ' + classToInsert + '" id="task-' + this.id + '">' +
+          '<div class="task-pomodori ' + classToInsert + '">' + this.pomodori + '</div>' +
+          '<div class="task-title ' + classToInsert + '">' +
+          this.title +
+          '</div>' +
+          '<div class="task-buttons">' +
+          '<button id="task-add-' + this.id + '" class="task-add-btn">+</button>' +
+          '<button id="task-add-' + this.id + '" class="task-dec-btn">-</button>' +
+          '<button id="task-add-' + this.id + '" class="task-remove-btn">x</button>' +
+          '</div>' +
+          '</li>';
+      },
+  
+      getModalHTMLTemplate: function () {
+        return '' +
+          '<li class="modal-task" id="modal-task-' + this.id + '">' +
+          '<div class="task-pomodori">' + this.pomodori + '</div>' +
+          '<div class="task-title">' + this.title + '</div>' +
+          '</li>';
+      }
+    };
+  
+    TaskObject.init.prototype = TaskObject.prototype;
+  
+    return new TaskObject(id, title, pomodori);
   };
-
-  TaskObject.init.prototype = TaskObject.prototype;
-
-  return new TaskObject(id, title, pomodori);
-};
+}
 
 
 //=================================================
@@ -94,7 +147,7 @@ var Task = function (id, title, pomodori) {
 
 function addTask(title, pomodori) {
   if (!title) return;
-  var newTask = Task(tasks.length + 1, title, pomodori || 0);
+  var newTask = Task(getNewId(), title, pomodori || 0);
   tasks.unshift(newTask);
   refreshTasksList();
 }
@@ -169,26 +222,24 @@ function refreshTasksList() {
 }
 
 // tasks input and button
-document.getElementById("text-input").addEventListener("keydown", handleEnterTask);
-document.getElementById("add-task").addEventListener("click", handleAddTask);
 
-function handleEnterTask(e) { 
+function handleEnterTask(e) {
   if (e.keyCode != 13) return;
-  handleAddTask(e);
+  handleAddTask();
 }
 
-function handleAddTask(e) {
+function handleAddTask() {
 
   // check for empty title
-  if (!e.target.value) {
+  if (!taskInput.value) {
     showSnackbar("Must enter a title for the task");
     return;
   }
 
-  handleHax(e);
+  if(handleHax()) return;
 
-  addTask(validateTitle(e.target.value));
-  e.target.value = "";
+  addTask(validateTitle(taskInput.value));
+  taskInput.value = "";
 }
 
 function validateTitle(title) {
@@ -202,29 +253,40 @@ function validateTitle(title) {
   return title.length > 330 ? title.substring(0, 300) + "..." : title;
 }
 
-document.getElementById("clear-all-tasks-button").addEventListener("click", function(e) {
+function clearAllTasks(e) {
   tasks = [];
   refreshTasksList();
   if (totalPomodori > 0) setPendingPomodori(totalPomodori);
-});
-
-function handleHax(e) {
-  if (e.target.value.indexOf("---P:") != -1) {
-    hackPomodori(e.target.value.split(":")[1]);
-    e.target.value = "";
-    return;
-  }
-  if (e.target.value.indexOf("---T:") != -1) {
-    var v = e.target.value.split(":")[1].split(".");
-    hackTime(v[0], v[1] || 1);
-    e.target.value = "";
-    return;
-  }
 }
 
+function handleHax() {
+  if (taskInput.value.indexOf("---P:") != -1) {
+    hackPomodori(taskInput.value.split(":")[1]);
+    taskInput.value = "";
+    return true;
+  }
+  if (taskInput.value.indexOf("---T:") != -1) {
+    var v = taskInput.value.split(":")[1].split(".");
+    hackTime(v[0], v[1] || 1);
+    taskInput.value = "";
+    return true;
+  }
+
+  return false;
+}
+
+
 //===============================================
-// Setup event bindings for modal
+// Modal actions
 //===============================================
+
+function setupModal() {
+  document.getElementsByClassName("close")[0].addEventListener("click", closeModal);
+  
+  window.onclick = function (event) {
+    if (event.target == modal) closeModal();
+  }
+}
 
 function openModal() {
   modal.style.display = "block";
@@ -246,42 +308,39 @@ function openModal() {
   });
 }
 
-document.getElementsByClassName("close")[0]
-  .addEventListener("click", function () {
-    modal.style.display = "none";
-  });
-
-window.onclick = function (event) {
-  if (event.target == modal) modal.style.display = "none";
+function closeModal() {
+  modal.style.display = "none";
 }
 
 //===============================================
 // Setup event bindings for session handling
 //===============================================
 
-document.getElementById("pomodoro-button").addEventListener("click", function () {
+function startPomodoroSession() {
   setTime(25, 0);
   currentSession = 25;
   startTimer();
-});
-document.getElementById("short-break-button").addEventListener("click", function () {
+}
+
+function startShortBreakSession() {
   setTime(5, 0);
   currentSession = 5;
   startTimer();
-});
-document.getElementById("long-break-button").addEventListener("click", function () {
+}
+
+function startLongBreakSession() {
   setTime(10, 0);
   currentSession = 10;
   startTimer();
-});
+}
 
-document.getElementById("reset-pomodori").addEventListener("click", function () {
+function resetPomodoriHandler() {
   tasks.forEach(function (t) {
     t.pomodori = 0;
   });
   resetAllPomodori();
   refreshTasksList();
-});
+}
 
 
 //=======================================================
@@ -329,11 +388,6 @@ function setTime(min, sec) {
 // Setup event bindings for timer 
 //===============================================
 
-document.getElementById("time-container")
-  .addEventListener("click", handleTimerToggle);
-document.getElementById("start-button")
-  .addEventListener("click", handleTimerToggle);
-
 function handleTimerToggle() {
   if (isPlaying) pauseTimer();
   else startTimer();
@@ -364,8 +418,6 @@ function resetTimer() {
   removeBlink();
   updateButtonIcon();
 }
-
-document.getElementById("reset-button").addEventListener("click", resetTimer);
 
 function updateButtonIcon() {
   document.querySelector("#start-button img").setAttribute("src",
@@ -440,6 +492,7 @@ function hackTime(m, s) {
 //====================================================
 // Audio stuff
 //====================================================
+
 function playAudio() {
   var audio = document.querySelector("audio");
   if (!audio) return;
@@ -453,7 +506,7 @@ function playAudio() {
 // Storage stuff
 //====================================================
 
-document.getElementById("save-tasks").addEventListener("click", function () {
+function saveTasksTemplate() {
   if (!isStorageAvailable()) {
     showSnackbar("Sorry, cant save template. No Web Storage support.");
     return;
@@ -465,9 +518,9 @@ document.getElementById("save-tasks").addEventListener("click", function () {
 
   localStorage.template = tasks.map(function (t) { return t.title; });
   showSnackbar("Saved template");
-});
+}
 
-document.getElementById("load-tasks").addEventListener("click", function () {
+function loadTasksTemplate() {
   if (!isStorageAvailable()) {
     showSnackbar("Sorry, cant load template. No Web Storage support.", "#d00");
     return;
@@ -486,9 +539,9 @@ document.getElementById("load-tasks").addEventListener("click", function () {
     });
 
   showSnackbar("Loaded template");
-});
+}
 
-document.getElementById("clear-tasks").addEventListener("click", function () {
+function clearTasksTemplate() {
   if (!isStorageAvailable()) {
     showSnackbar("Sorry. No Web Storage support.", "#d00");
     return;
@@ -501,10 +554,66 @@ document.getElementById("clear-tasks").addEventListener("click", function () {
 
   localStorage.removeItem("template");
   showSnackbar("Cleared stored template.");
-});
+}
 
 function isStorageAvailable() {
   return typeof (Storage) !== "undefined";
+}
+
+function exportList(e) {
+  if(tasks.length === 0) {
+    showSnackbar("No tasks to copy");
+    return;
+  }
+
+  if(totalPomodori === 0 || pendingPomodori === totalPomodori) {
+    showSnackbar("Can't copy incomplete session");
+    return;
+  }
+
+  var textArea = document.createElement("textarea");
+
+  textArea.style.position = 'fixed';
+  textArea.style.top = 0;
+  textArea.style.left = 0;
+  textArea.style.width = '2em';
+  textArea.style.height = '2em';
+  textArea.style.padding = 0;
+  textArea.style.border = 'none';
+  textArea.style.outline = 'none';
+  textArea.style.boxShadow = 'none';
+  textArea.style.background = 'transparent';
+
+  textArea.value = totalPomodori + ";" + 
+    tasks
+      .filter(function(t) { return t.pomodori > 0; })
+      .map(function(t) {
+        return t.pomodori + " - " + toTitleCase(t.title)
+      })
+      .join(";");
+
+  document.body.appendChild(textArea);
+  
+  textArea.select();
+
+  try {
+    var successful = document.execCommand("copy");
+    var msg = successful ? "Successfully copied" : "Failed to copy";
+    showSnackbar(msg + " list to clipboard.");
+  } catch (err) {
+    showSnackbar("Error occured, can't copy.");    
+    console.log("Error occured, can't copy.", err);
+  }
+
+  document.body.removeChild(textArea);
+}
+
+function toTitleCase(str) {
+    return str.replace(
+      /\w*/g, function(txt){ 
+        return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+      }
+    );
 }
 
 //====================================================
@@ -520,27 +629,33 @@ function showSnackbar(text, color = "#ff00d0", msTime = 3000) {
 }
 
 
-//=============================================
-// Starting Point
-//=============================================
+//====================================================
+// All Event handlers
+//====================================================
 
-// Get references to DOM objects
-const tasksElement = document.getElementById("tasks");
-const modal = document.getElementById('myModal');
-const modalTasksElement = document.getElementById("modal-tasks");
-const timeMinElement = document.getElementById("time-min");
-const timeSecElement = document.getElementById("time-sec");
+function setupAllEventHandlers() {
+  // timer buttons
+  document.getElementById("time-container").addEventListener("click", handleTimerToggle);
+  document.getElementById("start-button").addEventListener("click", handleTimerToggle);
+  document.getElementById("reset-button").addEventListener("click", resetTimer);
 
-// Main control variables
-var time = new Time(25, 0);
-var timer;
-var tasks = [];
-var totalPomodori = 0;
-var pendingPomodori = 0;
-var currentSession = 25;
-var isPlaying = false;
+  // session buttons
+  document.getElementById("pomodoro-button").addEventListener("click", startPomodoroSession);
+  document.getElementById("short-break-button").addEventListener("click", startShortBreakSession);
+  document.getElementById("long-break-button").addEventListener("click", startLongBreakSession);
+  document.getElementById("reset-pomodori").addEventListener("click", resetPomodoriHandler);
 
-// set initial stuff
-setTime(time.min, time.sec);
-updatePendingPomodoriText();
-updateTotalPomodoriText();
+  // tasks input and clear
+  taskInput.addEventListener("keydown", handleEnterTask);
+  document.getElementById("add-task").addEventListener("click", handleAddTask);
+  document.getElementById("clear-all-tasks-button").addEventListener("click", clearAllTasks);
+
+  // tasks template storage
+  document.getElementById("export-tasks").addEventListener("click", exportList);
+  document.getElementById("clear-tasks").addEventListener("click", clearTasksTemplate);
+  document.getElementById("load-tasks").addEventListener("click", loadTasksTemplate);
+  document.getElementById("save-tasks").addEventListener("click", saveTasksTemplate);
+
+  // modal
+  setupModal();
+}
