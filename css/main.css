@@ -57,8 +57,8 @@ button:hover {
 #time-container {
     align-self: center;
     justify-self: center;
-    margin: 0 auto 30px auto;
-    font-size: 90;
+    margin: 30px auto 50px auto;
+    font-size: 90px;
     text-align: center;
     cursor: pointer;
 }
@@ -161,11 +161,6 @@ button:hover {
     width: 90%;
 }
 
-#tasks-title {
-    display: grid;
-    grid-template-columns: 1fr 5fr 1fr;
-}
-
 #tasks-container h2 {
     font-size: 38px;
 }
@@ -241,6 +236,7 @@ button:hover {
     color: #ddd;
     font-size: 20px;
     padding: 15px;
+    border-radius: 0;    
 }
 .task-buttons button:hover {
     background: #d7a21e;
@@ -251,7 +247,7 @@ button:hover {
 
 #storage-buttons {
     text-align: center;
-    margin: 50px auto 10px auto;
+    margin: 80px auto 10px auto;
 }
 #storage-buttons button {
     background-color: #967116;
@@ -268,6 +264,10 @@ button:hover {
 .empty {
     padding: 30px;
     font-size: 30px;
+}
+
+#clear-all-tasks-button {
+    display: none;
 }
 
 
@@ -458,6 +458,10 @@ input:focus {
     justify-self: center;
 }
 
+.float-right {
+    float: right;
+}
+
 
 /********************************************
  * media queries  
@@ -466,6 +470,7 @@ input:focus {
 @media screen and (max-width: 800px) {
     #container { 
         width: 100%;
+        padding: 5px;
     }
     #session-status, #timer-container, #tasks-container {
         width: 95%;
@@ -475,5 +480,8 @@ input:focus {
         font-size: 80px;
     }
     
+    .task-pomodori {
+        font-size: 18px;
+    }
 }
     

@@ -159,9 +159,11 @@ function refreshTasksList() {
       '<div class="empty text-center">' +
       'You have no tasks'
     '</div>';
+    document.getElementById("clear-all-tasks-button").style.display = "none";
     return;
   }
-
+  
+  document.getElementById("clear-all-tasks-button").style.display = "inherit";
   tasksElement.innerHTML = "";
   tasks.forEach(function (t) {
     tasksElement.innerHTML += t.getHTMLTemplate();
