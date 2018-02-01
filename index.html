@@ -16,81 +16,84 @@
 
   <div id="container">
 
-    <!-- Timer -->
-    <div id="timer-container">
-
-      <div id="timer-buttons">
-        <button id="start-button">
-          <img class="icon-20" src="assets/play.png" alt="Play/Pause image">
-        </button>
-        <button id="reset-button">
-          <img class="icon-20" src="assets/reload.png" alt="Reload image">
-        </button>
-      </div>
-
-      <div id="time-container">
-        <span id="time-min"></span> :
-        <span id="time-sec"></span>
-      </div>
-
-      <div id="session-buttons">
-        <button id="pomodoro-button">
-          <img class="icon-40" src="assets/tomato.png" alt="Tomato image">
-        </button>
-        <button id="short-break-button">
-          <img class="icon-40" src="assets/time-5.png" alt="Tomato image">
-        </button>
-        <button id="long-break-button">
-          <img class="icon-40" src="assets/time-10.png" alt="Tomato image">
-        </button>
-      </div>
-
-    </div>
-
-    <!-- Session status -->
-    <div id="session-status">
-      <div id="pomodori-count-container">
-        Total Pomodori: <span id="total-pomodori">0</span>
-      </div>
-      <div id="pending-pomodori-container">
-        Unassigned:
-        <span id="pending-pomodori">0</span>
-      </div>
-      <div>
-        <button id="reset-pomodori">
-            <img src="assets/reload.png" class="icon-20">
-        </button>
+    <!-- Left -->
+    <div class="left-container">
+      <!-- Timer -->
+      <div id="timer-container">
+  
+        <div id="timer-buttons">
+          <button id="start-button">
+            <img class="icon-20" src="assets/play.png" alt="Play/Pause image">
+          </button>
+          <button id="reset-button">
+            <img class="icon-20" src="assets/reload.png" alt="Reload image">
+          </button>
+        </div>
+  
+        <div id="time-container">
+          <span id="time-min"></span> :
+          <span id="time-sec"></span>
+        </div>
+  
+        <div id="session-buttons">
+          <button id="pomodoro-button">
+            <img class="icon-40" src="assets/tomato.png" alt="Tomato image">
+          </button>
+          <button id="short-break-button">
+            <img class="icon-40" src="assets/time-5.png" alt="Tomato image">
+          </button>
+          <button id="long-break-button">
+            <img class="icon-40" src="assets/time-10.png" alt="Tomato image">
+          </button>
+        </div>
+  
       </div>
     </div>
 
-    <!-- Tasks -->
-    <div id="tasks-container">
-      <div>
-        <h2 class="text-center">Tasks</h2>
-      </div>
-      <div>
-        <div class="input-container">
-          <input type="text" id="text-input" autofocus placeholder="Enter a task..." >
-          <button type="button" id="add-task">Add</button>
+    <!-- Right -->
+    <div class="right-container">
+      <!-- Session status -->
+      <div id="session-status">
+        <div id="pomodori-count-container">
+          Total Pomodori: <span id="total-pomodori">0</span>
+        </div>
+        <div id="pending-pomodori-container">
+          Unassigned:
+          <span id="pending-pomodori">0</span>
+        </div>
+        <div>
+          <button id="reset-pomodori">
+              <img src="assets/reload.png" class="icon-20">
+          </button>
         </div>
       </div>
-      <div id="tasks-list-container">
-        <ul id="tasks">
-          <div class="empty text-center">
-            You have no tasks
+  
+      <!-- Tasks -->
+      <div id="tasks-container">
+        <div>
+          <div class="input-container">
+            <input type="text" id="text-input" autofocus placeholder="Enter a task..." >
+            <button type="button" id="add-task">Add</button>
           </div>
-        </ul>
-        <div class="float-right">
-          <button id="clear-all-tasks-button">Clear All Tasks</button>
         </div>
-        <div id="storage-buttons">
-          <button id="save-tasks">Save template</button>
-          <button id="load-tasks">Load template</button>
-          <button id="clear-tasks">Clear saved template</button>
-          <button id="export-tasks">Copy session results</button>
+        <div id="tasks-list-container">
+          <ul id="tasks">
+            <div class="empty text-center">
+              You have no tasks
+            </div>
+          </ul>
+          <div class="float-right">
+            <button id="clear-all-tasks-button">Clear All Tasks</button>
+          </div>
+          <div id="storage-buttons">
+            <button id="save-tasks">Save template</button>
+            <button id="load-tasks">Load template</button>
+            <button id="clear-tasks">Clear saved template</button>
+            <button id="export-tasks">Copy session results</button>
+          </div>
         </div>
+  
       </div>
-
     </div>
 
   </div>
