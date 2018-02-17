@@ -585,8 +585,14 @@ function exportList(e) {
   textArea.style.outline = 'none';
   textArea.style.boxShadow = 'none';
   textArea.style.background = 'transparent';
-
-  textArea.value = totalPomodori + ";" + 
+  
+  today = new Date();
+  yesterday = new Date(today);
+  yesterday.setDate(today.getDate() - 1);
+  dateText = yesterday.toDateString().split(" ")
+  
+  textArea.value = dateText[1] + "-" + dateText[2] + "," +
+    totalPomodori + "," + 
     tasks
       .filter(function(t) { return t.pomodori > 0; })
       .map(function(t) {
