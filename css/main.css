@@ -52,10 +52,6 @@ button:hover {
     width: 90%;
     display: grid;
     margin-bottom: 0;    
-    /* justify-items: center;
-    align-items: center; */
-    /* height: 350px; */
-    /* grid-auto-rows: minmax(150px, auto); */
 }
 
 #time-container {
@@ -70,7 +66,6 @@ button:hover {
 #time-container:hover{
     color: #fff;
 }
-
 
 #timer-buttons {
     margin: 0 auto;
@@ -105,13 +100,12 @@ button:hover {
 }
 
 #time-min, #time-sec {
-    font-size: 90px;
-    letter-spacing: 10px;
+    font-size: 60px;
+    letter-spacing: 2px;
     text-align: center;
     font-weight: 600;
     cursor: pointer;    
 }
-
 
 
 /*************************************************
