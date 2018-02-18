@@ -591,7 +591,7 @@ function exportList(e) {
   yesterday.setDate(today.getDate() - 1);
   dateText = yesterday.toDateString().split(" ")
   
-  textArea.value = dateText[1] + "-" + dateText[2] + "," +
+  textArea.value = dateText[2] + "-" + dateText[1] + "," +
     totalPomodori + "," + 
     tasks
       .filter(function(t) { return t.pomodori > 0; })
